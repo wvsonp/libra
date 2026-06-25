@@ -1,9 +1,6 @@
 # Research Agent
 
-A framework-free AI agent that turns a research goal into a structured TODO plan,
-executes each task with real tools, and returns a sourced brief. No LangChain /
-LangGraph / AutoGen — loop, prompts, and context are hand-written on the raw
-OpenAI SDK.
+A framework-free AI agent that turns a research goal into a structured TODO plan, executes each task with real tools, and returns a sourced brief.
 
 ## Quick start
 
@@ -13,7 +10,7 @@ cp .env.example .env          # set OPENAI_API_KEY (+ model names)
 uv run python -m src.cli "Compare managed Postgres options for a small SaaS"
 
 uv run python -m src.cli --resume <run_id>   # resume an interrupted run
-pytest tests/ -v                             # offline tests, no API key
+uv run pytest tests/                             # offline tests
 ```
 
 ## How the agent loop works
@@ -44,11 +41,11 @@ Tools live in a registry (`name → callable + JSON schema`); adding one is a
 single `register()` call, auto-discovered by the executor.
 
 
-| Tool                             | What it does                                                                 | Status   |
-| -------------------------------- | ---------------------------------------------------------------------------- | -------- |
-| `web_search`                     | DuckDuckGo (keyless), retries on rate-limit. Prod swap: Tavily.              | **Real** |
-| `fetch`                          | Fetches a URL, extracts readable text (`trafilatura`), capped at 4000 chars. | **Real** |
-| `doc_search` / `academic_search` | RAG / scholarly lookup — mocks showing the one-line-add registry pattern.    | Mock     |
+| Tool                             | What it does                                                                 | Status            |
+| -------------------------------- | ---------------------------------------------------------------------------- | ----------------- |
+| `web_search`                     | DuckDuckGo (keyless), retries on rate-limit. Prod swap: Tavily.              | **Real**          |
+| `fetch`                          | Fetches a URL, extracts readable text (`trafilatura`), capped at 4000 chars. | **Real**          |
+| `doc_search` / `academic_search` | RAG / scholarly lookup — mocks showing the one-line-add registry pattern.    | Mock / Distractor |
 
 
 ## Context strategy
@@ -74,7 +71,7 @@ uv run python -m evaluation.runner              # full eval (needs API key)
 uv run python -m evaluation.runner --no-judge   # skip LLM judges (tool-F1 only; still runs the agent)
 ```
 
-### Scenarios and what "success" means
+### Scenarios and what "success" means (see evaluation/golden.json)
 
 1. **Well-scoped comparison** (`postgres_compare`, `rust_vs_go`) — decomposes the
   goal, calls `web_search` + `fetch`, and cites the URLs used.
@@ -93,8 +90,6 @@ The runner prints a summary table and writes a JSON report to
 `transcripts/example_session.md` for a full transcript.
 
 ## Known limitations
-
-Understood issues, left documented rather than rushed (honesty over a half-fix):
 
 1. **Task-success scores look low (~1–2 / 6).** The LLM judge is intentionally
   strict and penalizes breadth-over-depth on comparison goals; manual reads show
@@ -122,4 +117,6 @@ Understood issues, left documented rather than rushed (honesty over a half-fix):
   Tavily/Brave behind the same tool signature, cache fetched pages, and add a
    per-run token/cost guardrail alongside the existing iteration/tool-call limits.
 4. **Create A minimal UI using Streamlit**
+5. **Enahnce the evaluation:** I would add more samples to golden sets, covering edge cases.
+6. **Add an Entry Gate to check the input query.** Is the query complex enough for a research? is the intent of the user clear or need more follow-up question from the user? Is the query relavant to the scope of the research tool?
 
