@@ -11,6 +11,8 @@ returning nothing.
 """
 from __future__ import annotations
 
+from collections.abc import Callable
+
 from src.agent.executor import execute_task
 from src.config import cfg
 from src.logging import log_step, print_warning
@@ -19,7 +21,7 @@ from src.models import Plan, TaskStatus
 _NO_PROGRESS_CAP = 3  # consecutive iterations without a task completing -> abort
 
 
-def run_loop(plan: Plan) -> None:
+def run_loop(plan: Plan, after_step: Callable[[Plan], None] | None = None) -> None:
     """
     Run the execution loop. Mutates plan tasks in-place (status, result).
     Logs every completed step to JSONL + console.
@@ -56,6 +58,8 @@ def run_loop(plan: Plan) -> None:
         for task in ready:
             step = execute_task(plan, task, plan.run_id)
             log_step(step)
+            if after_step is not None:
+                after_step(plan)
 
         iterations += 1
 

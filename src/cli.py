@@ -127,29 +127,9 @@ def main() -> None:
 
     # ── run the loop ─────────────────────────────────────────────────────────
     from src.agent.loop import run_loop
-    from src.store import save as _save
+    from src.store import save
 
-    # Wrap loop to save after every step
-    _original_execute = None
-
-    def _loop_with_save(p):
-        from src.agent import executor as _exec_module
-        from src.agent.loop import run_loop as _loop
-
-        original = _exec_module.execute_task
-
-        def patched(plan, task, run_id):
-            step = original(plan, task, run_id)
-            _save(plan)
-            return step
-
-        _exec_module.execute_task = patched
-        try:
-            _loop(p)
-        finally:
-            _exec_module.execute_task = original
-
-    _loop_with_save(plan)
+    run_loop(plan, after_step=save)
 
     # ── synthesize ───────────────────────────────────────────────────────────
     from src.agent.synthesizer import synthesize
@@ -159,7 +139,6 @@ def main() -> None:
     print_result(brief)
 
     # Save final state + write brief to file
-    from src.store import save
     save(plan)
     brief_path = Path(".runs") / plan.run_id / "brief.md"
     brief_path.write_text(f"# Research Brief\n\n**Goal:** {plan.goal}\n\n{brief}\n")
