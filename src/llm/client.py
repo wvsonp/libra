@@ -19,9 +19,11 @@ class LLMClient:
         system: str,
         user: str,
         schema: dict[str, Any],
+        *,
+        model: str | None = None,
     ) -> dict[str, Any]:
         response = self._client.chat.completions.create(
-            model=cfg.openai_model,
+            model=model or cfg.openai_model,
             messages=[
                 {"role": "system", "content": system},
                 {"role": "user", "content": user},

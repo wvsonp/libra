@@ -21,6 +21,7 @@ def _require(key: str) -> str:
 class Config:
     openai_api_key: str = _require("OPENAI_API_KEY")
     openai_model: str = os.environ["OPENAI_MODEL"]
+    openai_eval_model: str = os.environ["OPENAI_EVAL_MODEL"]
 
     max_plan_tasks: int = int(os.environ["MAX_PLAN_TASKS"])
     max_iterations: int = int(os.environ["MAX_ITERATIONS"])
