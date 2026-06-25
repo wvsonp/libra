@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import time
-from typing import Any
 
 from ddgs import DDGS
 from ddgs.exceptions import DDGSException
@@ -13,15 +12,11 @@ _MAX_RETRIES = 2
 
 
 def web_search(query: str) -> str:
-    """
-    Search the web and return a formatted list of results (title, snippet, url).
-    Returns an error string on failure so the executor can handle it gracefully.
-    """
-    last_error: str = ""
+    last_error = ""
     for attempt in range(_MAX_RETRIES + 1):
         try:
             with DDGS() as ddgs:
-                results: list[dict[str, Any]] = list(
+                results = list(
                     ddgs.text(
                         query,
                         max_results=cfg.search_max_results,
@@ -30,13 +25,10 @@ def web_search(query: str) -> str:
                 )
             if not results:
                 return f"No results found for query: {query}"
-            lines = []
-            for r in results:
-                title = r.get("title", "")
-                body = r.get("body", "")
-                href = r.get("href", "")
-                lines.append(f"Title: {title}\nSnippet: {body}\nURL: {href}")
-            return "\n\n".join(lines)
+            return "\n\n".join(
+                f"Title: {r.get('title', '')}\nSnippet: {r.get('body', '')}\nURL: {r.get('href', '')}"
+                for r in results
+            )
         except DDGSException as exc:
             last_error = str(exc)
             if attempt < _MAX_RETRIES:

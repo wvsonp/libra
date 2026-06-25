@@ -12,7 +12,6 @@ class LLMClient:
     def __init__(self) -> None:
         self._client = OpenAI(
             api_key=cfg.openai_api_key,
-            **({"base_url": cfg.openai_base_url} if cfg.openai_base_url else {}),
         )
 
     def plan_json(
