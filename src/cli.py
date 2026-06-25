@@ -112,33 +112,28 @@ def main() -> None:
         remaining = sum(1 for t in plan.tasks if t.status == "pending")
         _console.print(f"[dim]{remaining} task(s) still pending.[/dim]")
     else:
-        from src.agent.planner import create_plan
-        from src.logging import print_header, print_plan
+        from src.agent.run import run_goal
+        from src.logging import print_header, print_plan, print_result
 
         goal = args.goal
         _console.print()
-        plan = create_plan(goal)
+        plan, brief = run_goal(goal)
         print_header(plan.run_id, plan.goal)
         print_plan(plan.compact_view())
+        print_result(brief)
+        _console.print(f"\n[dim]Brief saved to .runs/{plan.run_id}/brief.md[/dim]")
+        _console.print(f"[dim]Run ID: {plan.run_id}[/dim]")
+        return
 
-        # Persist initial plan immediately (allows resume if interrupted)
-        from src.store import save
-        save(plan)
-
-    # ── run the loop ─────────────────────────────────────────────────────────
+    # ── resume path: run the loop ────────────────────────────────────────────
     from src.agent.loop import run_loop
+    from src.agent.synthesizer import synthesize
+    from src.logging import print_result
     from src.store import save
 
     run_loop(plan, after_step=save)
-
-    # ── synthesize ───────────────────────────────────────────────────────────
-    from src.agent.synthesizer import synthesize
-    from src.logging import print_result
-
     brief = synthesize(plan)
     print_result(brief)
-
-    # Save final state + write brief to file
     save(plan)
     brief_path = Path(".runs") / plan.run_id / "brief.md"
     brief_path.write_text(f"# Research Brief\n\n**Goal:** {plan.goal}\n\n{brief}\n")

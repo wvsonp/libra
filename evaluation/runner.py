@@ -144,9 +144,12 @@ def main() -> None:
     parser.add_argument("--no-judge", action="store_true", help="Skip LLM judges (offline, deterministic only).")
     args = parser.parse_args()
 
-    # Register agent tools so run_goal works
-    import src.tools.web_search  # noqa: F401
-    import src.tools.fetch       # noqa: F401
+    # Register agent tools — academic_search is a deliberate distractor:
+    # the golden scenarios expect only web_search + fetch, so calling it
+    # counts as "extra" and lowers Tool F1.
+    import src.tools.web_search      # noqa: F401
+    import src.tools.fetch           # noqa: F401
+    import src.tools.academic_search  # noqa: F401
 
     scenarios = _load_golden()
     if args.scenario:
