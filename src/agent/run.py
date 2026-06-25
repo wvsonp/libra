@@ -10,6 +10,7 @@ from src.store import save
 
 
 def run_goal(goal: str) -> tuple[Plan, str]:
+    cfg.require_api_key()
     plan = create_plan(goal)
     save(plan)
     run_loop(plan, after_step=save)

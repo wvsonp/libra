@@ -128,9 +128,11 @@ def main() -> None:
     # ── resume path: run the loop ────────────────────────────────────────────
     from src.agent.loop import run_loop
     from src.agent.synthesizer import synthesize
+    from src.config import cfg
     from src.logging import print_result
     from src.store import save
 
+    cfg.require_api_key()
     run_loop(plan, after_step=save)
     brief = synthesize(plan)
     print_result(brief)

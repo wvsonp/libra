@@ -39,6 +39,7 @@ def _run_scenario(
     sid = scenario["id"]
     goal = scenario["goal"]
     expected = scenario.get("expected_tools", [])
+    success_criteria = scenario.get("success_criteria", [])
 
     _console.rule(f"[cyan]Scenario: {sid}[/cyan]")
     _console.print(f"[dim]Goal:[/dim] {goal}\n")
@@ -54,7 +55,7 @@ def _run_scenario(
 
     if use_judge:
         _console.print("[dim]Running LLM judges...[/dim]")
-        success_result = task_success(plan, brief)
+        success_result = task_success(plan, brief, success_criteria)
         faith_result = answer_faithfulness(plan, brief)
         _console.print(
             f"[bold]Task success:[/bold] {success_result['success']}  "

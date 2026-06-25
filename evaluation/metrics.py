@@ -27,12 +27,17 @@ def tool_call_accuracy(run_id: str, expected: list[str]) -> dict[str, Any]:
     }
 
 
-def task_success(plan: Plan, brief: str) -> dict[str, Any]:
+def task_success(
+    plan: Plan,
+    brief: str,
+    success_criteria: list[str] | None = None,
+) -> dict[str, Any]:
     """LLM judge: did the agent fully answer the goal? Returns {success, reasoning}."""
     result = judge_task_success(
         goal=plan.goal,
         plan_status=plan.compact_view(),
         brief=brief,
+        success_criteria=success_criteria,
     )
     return {
         "success": bool(result["success"]),

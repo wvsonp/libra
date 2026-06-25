@@ -31,11 +31,20 @@ _FAITHFULNESS_SCHEMA: dict[str, Any] = {
 }
 
 
-def judge_task_success(goal: str, plan_status: str, brief: str) -> dict[str, Any]:
+def judge_task_success(
+    goal: str,
+    plan_status: str,
+    brief: str,
+    success_criteria: list[str] | None = None,
+) -> dict[str, Any]:
     template = (_PROMPTS / "task_success.md").read_text()
+    criteria = "\n".join(f"- {item}" for item in success_criteria or [])
+    if not criteria:
+        criteria = "No scenario-specific criteria provided; judge against the goal."
     system = (
         template
         .replace("{goal}", goal)
+        .replace("{success_criteria}", criteria)
         .replace("{plan_status}", plan_status)
         .replace("{brief}", brief)
     )

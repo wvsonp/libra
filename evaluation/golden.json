@@ -14,6 +14,39 @@
       "id": "rust_vs_go",
       "goal": "Compare Rust and Go for building a high-throughput backend service",
       "expected_tools": ["web_search", "fetch"]
+    },
+    {
+      "id": "ambiguous_cloud_migration",
+      "goal": "Help me migrate to the cloud",
+      "expected_tools": ["web_search", "fetch"],
+      "success_criteria": [
+        "States a reasonable assumption or narrow interpretation before answering.",
+        "Scopes the response to a concrete research slice instead of treating every possible cloud migration concern as in scope.",
+        "Mentions important missing details or choices that would affect a real migration plan.",
+        "Produces a tight answer rather than generic boilerplate."
+      ]
+    },
+    {
+      "id": "empty_results_obscure_product",
+      "goal": "Find official pricing for the nonexistent product Zorbix Quantum Notes Enterprise",
+      "expected_tools": ["web_search"],
+      "success_criteria": [
+        "Does not invent pricing, vendors, source URLs, or product facts.",
+        "Clearly says that no reliable official pricing source was found if evidence is unavailable.",
+        "Explains what was attempted and why the answer is limited.",
+        "Suggests a concrete next verification step such as checking the vendor site or contacting the vendor."
+      ]
+    },
+    {
+      "id": "broad_ai_business",
+      "goal": "Research everything I need to know to start an AI business",
+      "expected_tools": ["web_search", "fetch"],
+      "success_criteria": [
+        "Narrows the broad request to a useful, explicit scope such as validating and launching a small AI SaaS.",
+        "Avoids spiraling into an exhaustive encyclopedia of business, legal, hiring, compliance, and infrastructure topics.",
+        "Identifies what is covered and what remains out of scope.",
+        "Returns a concise, actionable brief grounded in gathered sources."
+      ]
     }
   ]
 }

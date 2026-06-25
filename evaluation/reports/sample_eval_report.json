@@ -1,0 +1,207 @@
+{
+  "timestamp": "20260625T230539Z",
+  "aggregates": {
+    "mean_tool_f1": 0.9666666666666667,
+    "task_success_rate": 0.16666666666666666,
+    "mean_faithfulness": 0.8033333333333333
+  },
+  "scenarios": [
+    {
+      "scenario_id": "germany_masters",
+      "goal": "How do I apply for public university in germany for master from non-eu country",
+      "run_id": "709970f4",
+      "tool_call_accuracy": {
+        "actual_tools": [
+          "fetch",
+          "web_search"
+        ],
+        "expected_tools": [
+          "fetch",
+          "web_search"
+        ],
+        "missing": [],
+        "extra": [],
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "task_success": {
+        "success": false,
+        "reasoning": "The brief gives useful context on requirements, language, fees, and visas, but it does not clearly lay out a step\u2011by\u2011step application process or practical instructions tailored to a non\u2011EU student on how to actually apply, so it only partially answers the goal."
+      },
+      "answer_faithfulness": {
+        "score": 0.93,
+        "unsupported_claims": [
+          "Germany is an attractive destination for international students, particularly from non-EU countries, due to its robust education system and relatively low tuition fees. (general attractiveness and robustness not stated in evidence)",
+          "Fundamental admission process components such as using an online application portal, and providing CV, letters of recommendation, and statement of purpose. (admissions requirements and portal use not covered in evidence)",
+          "The exact figure of \u20ac11,904 annually required in a blocked account for the visa. (evidence mentions this but as part of the search summary; original linked pages not shown here to verify the precise amount or its current validity)",
+          "Number of English-taught master\u2019s programs is approximately 1,800. (the count appears only in the summarized evidence snippet; underlying source content is not directly visible here)"
+        ],
+        "reasoning": "Most key points on language requirements, tuition (including Baden-W\u00fcrttemberg fees and semester contributions), and the general student visa process are grounded in the provided evidence, but some contextual/admissions details and specific quantified claims go beyond what is explicitly documented."
+      }
+    },
+    {
+      "scenario_id": "postgres_compare",
+      "goal": "Compare managed Postgres options for a small SaaS",
+      "run_id": "e454a794",
+      "tool_call_accuracy": {
+        "actual_tools": [
+          "fetch",
+          "web_search"
+        ],
+        "expected_tools": [
+          "fetch",
+          "web_search"
+        ],
+        "missing": [],
+        "extra": [],
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "task_success": {
+        "success": false,
+        "reasoning": "The brief lists options and high-level pros but does not really compare them in depth for a small SaaS context (e.g., cost at small scales, operational complexity, lock-in, scaling paths), so it only partially addresses the goal."
+      },
+      "answer_faithfulness": {
+        "score": 0.97,
+        "unsupported_claims": [
+          "Heroku Postgres is described as having 'real-time scaling capabilities' specifically (evidence only mentions scalability and ability to scale, not that it is real-time).",
+          "Azure Database for PostgreSQL is said to have a 'Linux-native architecture' (this detail appears only in the evidence snippet, but not clearly attributable to Azure\u2019s own main marketing page; however it is still mentioned in evidence, so partially ambiguous).",
+          "The conclusion segment maps each provider to a specific primary use case (e.g., 'for businesses needing security and high availability: Azure Database...') which is somewhat interpretive beyond the explicit wording of the evidence, though broadly consistent with features described."
+        ],
+        "reasoning": "Nearly all substantive statements in the brief about AWS RDS, Google Cloud SQL, Azure Database for PostgreSQL, and Heroku Postgres closely match or reasonably synthesize the provided evidence; only a few minor interpretive or slightly embellished claims (e.g., 'real-time' scaling, strongly framed use-case recommendations) are not directly stated, so the brief is very well grounded overall."
+      }
+    },
+    {
+      "scenario_id": "rust_vs_go",
+      "goal": "Compare Rust and Go for building a high-throughput backend service",
+      "run_id": "24867609",
+      "tool_call_accuracy": {
+        "actual_tools": [
+          "fetch",
+          "web_search"
+        ],
+        "expected_tools": [
+          "fetch",
+          "web_search"
+        ],
+        "missing": [],
+        "extra": [],
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "task_success": {
+        "success": false,
+        "reasoning": "The brief gives a general qualitative comparison of Rust and Go but does not focus specifically enough on high-throughput backend metrics or concrete trade-offs, leaving the core research goal only partially addressed."
+      },
+      "answer_faithfulness": {
+        "score": 0.0,
+        "unsupported_claims": [
+          "Rust provides zero-cost abstractions that allow high-level code to match C/C++ performance for backend services.",
+          "Go\u2019s garbage collector minimizes pauses and is designed for rapid deployment and execution of services.",
+          "Go\u2019s built-in goroutines and concurrency model lead to higher throughput for real-time, multi-request applications.",
+          "Go is generally easier to learn and adopt (simpler syntax, convention over configuration) and thus improves team productivity and onboarding compared to Rust.",
+          "Rust\u2019s ownership and borrowing rules create a steeper learning curve but prevent memory-related issues and catch data races at compile time, leading to more robust concurrent applications."
+        ],
+        "reasoning": "There is no evidence provided at all, so none of the factual claims in the brief can be grounded in the evidence; all are effectively unsupported, yielding a score of 0.0."
+      }
+    },
+    {
+      "scenario_id": "ambiguous_cloud_migration",
+      "goal": "Help me migrate to the cloud",
+      "run_id": "ce6bf922",
+      "tool_call_accuracy": {
+        "actual_tools": [
+          "fetch",
+          "web_search"
+        ],
+        "expected_tools": [
+          "fetch",
+          "web_search"
+        ],
+        "missing": [],
+        "extra": [],
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "task_success": {
+        "success": false,
+        "reasoning": "The brief is mostly generic background on cloud, does not state assumptions, does not narrow the scope to a concrete slice, omits key migration-strategy, security, and data-transfer details, and thus fails the scenario-specific success criteria for helping with an actual migration plan."
+      },
+      "answer_faithfulness": {
+        "score": 0.98,
+        "unsupported_claims": [],
+        "reasoning": "Nearly all claims in the brief (cloud benefits, major providers\u2019 strengths, and migration cost structures for AWS, Azure, and GCP) are directly reflected in or reasonably inferred from the provided evidence; no significant unsupported statements were found."
+      }
+    },
+    {
+      "scenario_id": "empty_results_obscure_product",
+      "goal": "Find official pricing for the nonexistent product Zorbix Quantum Notes Enterprise",
+      "run_id": "862931c5",
+      "tool_call_accuracy": {
+        "actual_tools": [
+          "web_search"
+        ],
+        "expected_tools": [
+          "web_search"
+        ],
+        "missing": [],
+        "extra": [],
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "task_success": {
+        "success": true,
+        "reasoning": "The brief correctly concludes that no official pricing or even evidence of the product\u2019s existence was found, does not fabricate prices or sources, explains the limitation, and recommends next steps, thus meeting the scenario-specific criteria."
+      },
+      "answer_faithfulness": {
+        "score": 0.96,
+        "unsupported_claims": [
+          "The suggestion that the product might be in a 'preliminary development phase' (rather than simply nonexistent or hypothetical).",
+          "The recommendation to 'monitor developments within Zorbix technologies' for potential future announcements (forward-looking advice not grounded in the evidence)."
+        ],
+        "reasoning": "Nearly all key claims (no official pricing, no evidence the product exists, search results unrelated) are directly supported by the evidence; only speculative statements about development phase and monitoring future developments go beyond the provided information."
+      }
+    },
+    {
+      "scenario_id": "broad_ai_business",
+      "goal": "Research everything I need to know to start an AI business",
+      "run_id": "aadf0593",
+      "tool_call_accuracy": {
+        "actual_tools": [
+          "academic_search",
+          "fetch",
+          "web_search"
+        ],
+        "expected_tools": [
+          "fetch",
+          "web_search"
+        ],
+        "missing": [],
+        "extra": [
+          "academic_search"
+        ],
+        "precision": 0.667,
+        "recall": 1.0,
+        "f1": 0.8
+      },
+      "task_success": {
+        "success": false,
+        "reasoning": "The brief stays high-level and generic, does not narrow the goal to a concrete scope like launching a small AI SaaS, omits key topics such as tech stack, funding, competitors, and go-to-market, and fails to clearly define in-scope vs out-of-scope content, so it does not meet the scenario-specific success criteria."
+      },
+      "answer_faithfulness": {
+        "score": 0.98,
+        "unsupported_claims": [
+          "Specific numeric projection that the AI market will 'potentially surpass $2,500 billion by 2032' (evidence only says 'exceeding $2,500 billion' without the 'potentially' nuance, which is minor).",
+          "Attribution that legal considerations include 'choosing the appropriate business entity' and 'complying with employment laws'\u2014these are present in the evidence but framed slightly more broadly in the brief than explicitly detailed.",
+          "Framing OpenAI\u2019s exact revenue split as 'around 73% from subscriptions and 27% from API access'\u2014this is in the evidence but the precision of the percentages is presented as an example rather than a firmly established statistic."
+        ],
+        "reasoning": "Nearly all key quantitative and qualitative claims (market size/CAGR, business models and trends, legal areas, customer-needs methods and issues) are directly grounded in the evidence; only very minor extrapolations or framings go slightly beyond what is stated, so the brief is highly faithful overall."
+      }
+    }
+  ]
+}

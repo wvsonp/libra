@@ -10,9 +10,14 @@ from src.config import cfg
 
 class LLMClient:
     def __init__(self) -> None:
-        self._client = OpenAI(
-            api_key=cfg.openai_api_key,
-        )
+        self._client: OpenAI | None = None
+
+    @property
+    def client(self) -> OpenAI:
+        if self._client is None:
+            cfg.require_api_key()
+            self._client = OpenAI(api_key=cfg.openai_api_key)
+        return self._client
 
     def plan_json(
         self,
@@ -22,7 +27,7 @@ class LLMClient:
         *,
         model: str | None = None,
     ) -> dict[str, Any]:
-        response = self._client.chat.completions.create(
+        response = self.client.chat.completions.create(
             model=model or cfg.openai_model,
             messages=[
                 {"role": "system", "content": system},
@@ -43,7 +48,7 @@ class LLMClient:
         messages: list[dict[str, Any]],
         tools: list[dict[str, Any]],
     ) -> tuple[Any, int]:
-        response = self._client.chat.completions.create(
+        response = self.client.chat.completions.create(
             model=cfg.openai_model,
             messages=messages,
             tools=tools,
@@ -53,7 +58,7 @@ class LLMClient:
         return response.choices[0].message, usage.total_tokens if usage else 0
 
     def summarize(self, system: str, user: str) -> str:
-        response = self._client.chat.completions.create(
+        response = self.client.chat.completions.create(
             model=cfg.openai_model,
             messages=[
                 {"role": "system", "content": system},
