@@ -1,0 +1,19 @@
+{
+  "scenarios": [
+    {
+      "id": "germany_masters",
+      "goal": "How do I apply for public university in germany for master from non-eu country",
+      "expected_tools": ["web_search", "fetch"]
+    },
+    {
+      "id": "postgres_compare",
+      "goal": "Compare managed Postgres options for a small SaaS",
+      "expected_tools": ["web_search", "fetch"]
+    },
+    {
+      "id": "rust_vs_go",
+      "goal": "Compare Rust and Go for building a high-throughput backend service",
+      "expected_tools": ["web_search", "fetch"]
+    }
+  ]
+}
